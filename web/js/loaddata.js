@@ -1,5 +1,6 @@
 // 마커를 표시할 위치와 내용을 가지고 있는 객체 배열입니다
-var positions = [
+
+/*[
     {
         title: '카카오',
         lat: '33.450705',
@@ -20,7 +21,7 @@ var positions = [
         detailpage: 'http://www.naver.com',
         id: 'test'
     }
-];
+];*/
 
 for (var i = 0; i < positions.length; i++) {
     // 마커를 생성합니다

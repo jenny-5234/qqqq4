@@ -7,7 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.sql.*" %>
-<%@ page import="java.util.ArrayList" %>
+<%@ page import="org.json.simple.JSONObject" %>
+<%@ page import="org.json.simple.JSONArray" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,36 +23,39 @@
 <body>
 <%
     String test = "";
-    ArrayList result = new ArrayList();
-    Connection conn = null;
+    JSONArray jsonArray = new JSONArray();
+
     try {
-        String user = "system";
-        String pw = "1234";
-        String url = "jdbc:oracle:thin:@localhost:1521:XE";
+        Connection conn = null;
+        String connString =
+                "jdbc:sqlserver://14.32.18.226:1433;database=YL;user=as;password=1234";
+        conn = DriverManager.getConnection(connString);
 
-        Class.forName("oracle.jdbc.driver.OracleDriver");
-        conn = DriverManager.getConnection(url, user, pw);
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("select * from modum");
-        while(rs.next()) {
-            result.add(rs.getString("title"));
-            result.add(rs.getString("lat"));
-            result.add(rs.getString("lng"));
-            result.add(rs.getString("phone"));
-            result.
-
+        if(conn == null){
+            test += "connection nullexception";
         }
-    } catch (ClassNotFoundException cnfe) {
-        test = "DB 드라이버 로딩 실패";
-    } catch (SQLException sqle) {
-        test ="DB 접속실패 : ";
-    } catch (Exception e) {
-        test = "Unkonwn error";
-        e.printStackTrace();
+
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("select * from Shop where ShopId<=6710");
+        while (rs.next()) {
+            JSONObject obj = new JSONObject();
+            obj.put("title", rs.getString("ShopName"));
+            obj.put("lat", rs.getString("Latitude"));
+            obj.put("lng", rs.getString("Longititude"));
+            obj.put("road_address_name", rs.getString("StreetNameAddress"));
+            obj.put("address_name", rs.getString("Address"));
+                    /*obj.put("phone", rs.getString("phone"));
+                    obj.put("detailpage", rs.getString("detailpage"));
+                    obj.put("id", rs.getString("id"));*/
+            jsonArray.add(obj);
+        }
+    } catch (Exception e){
+        test += "아무거나";
     }
 %>
 <p><%=test%></p>
-<p><%=result%></p>
+<%--<p><%=jsonArray%></p>--%>
+<p><%=jsonArray%></p>
 <%--<div id="map" style="width:1000px;height:600px;"></div>--%>
 <input type="button" onclick="getjson('location/jeju.json', '제주도'), panTo(33.48892014636885, 126.49822643823065);" value="제주도">
 <div class="map_wrap">
@@ -73,6 +77,7 @@
 </div>
 <script src="js/polygon.js" type="text/javascript"></script>
 <script src="js/search.js" type="text/javascript"></script>
+<script>var positions =<%=jsonArray%></script>
 <script src="js/loaddata.js" type="text/javascript"></script>
 <%--<%@ include file="polygon.jsp" %>--%>
 <%--<%@ include file="search.jsp" %>--%>

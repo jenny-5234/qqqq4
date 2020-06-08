@@ -8,5 +8,11 @@
       <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
       <jdbc-url>jdbc:oracle:thin:@localhost:1521:XE</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="Microsoft SQL Server - @14.32.18.226" uuid="e0e23c28-eebd-4d99-b130-79bee7a30de6">
+      <driver-ref>sqlserver.ms</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
+      <jdbc-url>jdbc:sqlserver://14.32.18.226:1433;database=YL</jdbc-url>
+    </data-source>
   </component>
 </project>
