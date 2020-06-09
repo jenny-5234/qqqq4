@@ -113,8 +113,8 @@ function displayArea(coordinates, name, city) {
             '   <div class="title">' + name + '</div>' +
             '   <div class="size">총 면적 : 약 ' + Math.floor(polygon.getArea()) + ' m<sup>2</sup></area>' +
             '</div>';*/
-        ps.keywordSearch(city + name + " 긴급재난지원금", placesSearchCB);
 
+        ps.keywordSearch(city + name + " 긴급재난지원금", placesSearchCB);
         // infowindow.setContent(content);
         // infowindow.setPosition(mouseEvent.latLng);
         // infowindow.setMap(map);

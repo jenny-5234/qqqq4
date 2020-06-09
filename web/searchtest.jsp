@@ -40,14 +40,14 @@
         ResultSet rs = stmt.executeQuery("select * from Shop where ShopId<=6710");
         while (rs.next()) {
             JSONObject obj = new JSONObject();
-            obj.put("place_name", rs.getString("ShopName"));
-            obj.put("y", rs.getString("Latitude"));
-            obj.put("x", rs.getString("Longititude"));
+            obj.put("title", rs.getString("ShopName"));
+            obj.put("lat", rs.getString("Latitude"));
+            obj.put("lng", rs.getString("Longititude"));
             obj.put("road_address_name", rs.getString("StreetNameAddress"));
             obj.put("address_name", rs.getString("Address"));
-            obj.put("phone", rs.getString("Url"));
-            obj.put("detailpage", rs.getString("Url"));
-//                    obj.put("id", rs.getString("id"));
+                    /*obj.put("phone", rs.getString("phone"));
+                    obj.put("detailpage", rs.getString("detailpage"));
+                    obj.put("id", rs.getString("id"));*/
             jsonArray.add(obj);
         }
     } catch (Exception e){
@@ -61,8 +61,7 @@
 <input type="button" onclick="getjson('location/jeju.json', '제주도'), panTo(33.48892014636885, 126.49822643823065);" value="제주도">
 <button onclick="hideMarkers()">마커 감추기</button>
 <button onclick="showMarkers()">마커 보이기</button>
-<button onclick="makemarkerjson(positions)">테스트</button>
-<button onclick="displayPlaces(positions)">생성</button>
+<button onclick="makemarkerjson()">생성</button>
 <div class="map_wrap">
     <div id="map" style="width:100%;height:500px;position:relative;overflow:hidden;"></div>
 
@@ -81,11 +80,11 @@
     </div>
 </div>
 <script src="js/polygon.js" type="text/javascript"></script>
-<script src="js/search.js" type="text/javascript"></script>
+<script src="js/searchtest.js" type="text/javascript"></script>
 <script>
     var positions =<%=jsonArray%>
 </script>
-<script src="js/loaddata.js" type="text/javascript"></script>
+<script src="js/loaddatatest.js" type="text/javascript"></script>
 <%--<%@ include file="polygon.jsp" %>--%>
 <%--<%@ include file="search.jsp" %>--%>
 </body>

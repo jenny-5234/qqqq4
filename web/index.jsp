@@ -1,3 +1,9 @@
+<%@ page import="org.json.simple.JSONArray" %>
+<%@ page import="org.json.simple.JSONObject" %>
+<%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.DriverManager" %>
+<%@ page import="java.sql.ResultSet" %>
+<%@ page import="java.sql.Statement" %>
 <%--
   Created by IntelliJ IDEA.
   User: bit
@@ -18,6 +24,39 @@
   <link rel="stylesheet" type="text/css" href="css/search.css">
 </head>
 <body>
+<%
+    String test = "";
+    JSONArray jsonArray = new JSONArray();
+
+    try {
+        Connection conn = null;
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        String connString =
+                "jdbc:sqlserver://14.32.18.226:1433;database=YL;user=as;password=1234";
+        conn = DriverManager.getConnection(connString);
+
+        if (conn == null) {
+            test += "connection nullexception";
+        }
+
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("select * from Shop where ShopId<=6755");
+        while (rs.next()) {
+            JSONObject obj = new JSONObject();
+            obj.put("place_name", rs.getString("ShopName"));
+            obj.put("y", rs.getString("Latitude"));
+            obj.put("x", rs.getString("Longititude"));
+            obj.put("road_address_name", rs.getString("StreetNameAddress"));
+            obj.put("address_name", rs.getString("Address"));
+            obj.put("phone", rs.getString("Url"));
+            obj.put("detailpage", rs.getString("Url"));
+//                    obj.put("id", rs.getString("id"));
+            jsonArray.add(obj);
+        }
+    } catch (Exception e) {
+        test += "아무거나";
+    }
+%>
 <%--<div id="map" style="width:1000px;height:600px;"></div>--%>
 <input type="button" onclick="getjson('location/seouldetail.json','서울'), panTo(37.566833213145486, 126.97865508601613);" value="서울">
 <input type="button" onclick="getjson('location/ggidodetail.json', '경기도'), panTo(37.274999514115, 127.00891869697384);" value="경기">
@@ -36,6 +75,9 @@
 <input type="button" onclick="getjson('location/gwangju.json', '광주광역시'), panTo(35.160108723530996, 126.85163269066601);" value="광주">
 <input type="button" onclick="getjson('location/jeollanamdo.json', '전라남도'), panTo(34.81609068924449, 126.46278335953988);" value="전라남도">
 <input type="button" onclick="getjson('location/jeju.json', '제주도'), panTo(33.48892014636885, 126.49822643823065);" value="제주도">
+<button onclick="hideMarkers()">마커 감추기</button>
+<button onclick="showMarkers()">마커 보이기</button>
+<button onclick="displayPlaces(positions)">생성</button>
 <div class="map_wrap">
   <div id="map" style="width:100%;height:500px;position:relative;overflow:hidden;"></div>
 
@@ -55,6 +97,9 @@
 </div>
 <script src="js/polygon.js" type="text/javascript"></script>
 <script src="js/search.js" type="text/javascript"></script>
+<script>
+    var positions =<%=jsonArray%>
+</script>
 <script src="js/loaddata.js" type="text/javascript"></script>
 <%--<%@ include file="polygon.jsp" %>--%>
 <%--<%@ include file="search.jsp" %>--%>

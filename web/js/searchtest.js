@@ -9,13 +9,12 @@ var infowindow = new kakao.maps.InfoWindow({
     zIndex:1
 });
 
-var to=0;
 // 키워드로 장소를 검색합니다
 // searchPlaces();
 
 // 키워드 검색을 요청하는 함수입니다
 function searchPlaces() {
-    closeOverlay();
+
     var keyword = document.getElementById('keyword').value;
 
     if (!keyword.replace(/^\s+|\s+$/g, '')) {
@@ -38,21 +37,24 @@ function searchPlaces() {
 
 // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
 function placesSearchCB(data, status, pagination) {
+
     if (status === kakao.maps.services.Status.OK) {
+
         // 정상적으로 검색이 완료됐으면
         // 검색 목록과 마커를 표출합니다
         displayPlaces(data);
+
         // 페이지 번호를 표출합니다
-        console.log(pagination);
         displayPagination(pagination);
 
     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-        // alert('검색 결과가 존재하지 않습니다.');
+
+        alert('검색 결과가 존재하지 않습니다.');
         return;
 
     } else if (status === kakao.maps.services.Status.ERROR) {
 
-        // alert('검색 결과 중 오류가 발생했습니다.');
+        alert('검색 결과 중 오류가 발생했습니다.');
         return;
 
     }
@@ -60,6 +62,7 @@ function placesSearchCB(data, status, pagination) {
 
 // 검색 결과 목록과 마커를 표출하는 함수입니다
 function displayPlaces(places) {
+
     var listEl = document.getElementById('placesList'),
         menuEl = document.getElementById('menu_wrap'),
         fragment = document.createDocumentFragment(),
@@ -72,8 +75,7 @@ function displayPlaces(places) {
     // 지도에 표시되고 있는 마커를 제거합니다
     removeMarker();
 
-    displayPagination(yt);
-    for ( var i=0; i<positions.length; i++ ) {
+    for ( var i=0; i<places.length; i++ ) {
 
         // 마커를 생성하고 지도에 표시합니다
         var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
@@ -83,10 +85,12 @@ function displayPlaces(places) {
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가합니다
         bounds.extend(placePosition);
+        console.log(places[i].place_url, places[i].phone);
         // 마커와 검색결과 항목에 mouseover 했을때
         // 해당 장소에 인포윈도우에 장소명을 표시합니다
         // mouseout 했을 때는 인포윈도우를 닫습니다
         (function (marker, title, road_address_name, address_name, phone, detailpage ,id, x, y) {
+
             kakao.maps.event.addListener(marker, 'mouseover', function() {
 
             });
@@ -96,7 +100,9 @@ function displayPlaces(places) {
             });
 
             kakao.maps.event.addListener(marker, 'click', function () {
+                // console.log(detailpage, phone);
                 displayInfowindow(marker, title, road_address_name, address_name, phone, detailpage, id, x, y);
+                // overlay.setMap(map);
             });
 
             itemEl.onclick = function () {
@@ -228,7 +234,7 @@ function displayInfowindow(marker, title, road_address_name, address_name, phone
         '                <div class="ellipsis">' + road_address_name + '</div>' +
         '                <div class="jibun ellipsis">' + address_name + '</div>' +
         '                <div class="contact">' + phone + '</div>' +
-        '                <div><a href="'+ detailpage +'" target="_blank" class="link">홈페이지</a><a href="https://map.kakao.com/link/to/'+ title + ',' + y + ',' + x +'" target="_blank" class="link">길찾기</a></div>' +
+        '                <div><a href="'+ detailpage +'" target="_blank" class="link">홈페이지</a><a href="https://map.kakao.com/link/to/'+ title + ',' + x + ',' + y +'" target="_blank" class="link">길찾기</a></div>' +
         '            </div>' +
         '        </div>' +
         '    </div>' +
