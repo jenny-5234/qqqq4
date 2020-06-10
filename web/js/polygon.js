@@ -109,12 +109,18 @@ function displayArea(coordinates, name, city) {
 
     // 다각형에 click 이벤트를 등록하고 이벤트가 발생하면 다각형의 이름과 면적을 인포윈도우에 표시합니다
     kakao.maps.event.addListener(polygon, 'click', function (mouseEvent) {
+        console.log(name);
+        // removeMarker();
+        switch (name) {
+            case("김포시"):  makemarkerjson(kimpo); break;
+            default: ps.keywordSearch(city + name + " 긴급재난지원금", placesSearchCB);
+        }
         /*var content = '<div class="info">' +
             '   <div class="title">' + name + '</div>' +
             '   <div class="size">총 면적 : 약 ' + Math.floor(polygon.getArea()) + ' m<sup>2</sup></area>' +
             '</div>';*/
 
-        ps.keywordSearch(city + name + " 긴급재난지원금", placesSearchCB);
+        // ps.keywordSearch(city + name + " 긴급재난지원금", placesSearchCB);
         // infowindow.setContent(content);
         // infowindow.setPosition(mouseEvent.latLng);
         // infowindow.setMap(map);

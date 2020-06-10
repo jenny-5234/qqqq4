@@ -24,45 +24,47 @@
 ];*/
 var markers = [];
 function makemarkerjson(positions) {
-
+    var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
     // console.log(positions[1].place_name);
     for (var i = 0; i < positions.length; i++) {
         // 마커를 생성합니다
         // console.log(positions[i].place_name);
-        ps.keywordSearch(positions[i].place_name + " 긴급재난지원금", placesSearchCB);
-        // /*var marker = new kakao.maps.Marker({
-        //
-        //     map: map, // 마커를 표시할 지도
-        //     position: new kakao.maps.LatLng(positions[i].lat, positions[i].lng) // 마커의 위치
-        //
-        // });
-        // markers.push(marker);
-        // // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
-        // // 이벤트 리스너로는 클로저를 만들어 등록합니다
-        // // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
-        // // kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
-        // // kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-        // (function (marker, title, road_address_name, address_name, phone,detailpage, id, x,y) {
-        //     // console.log(places[0].place_url, places[0].phone);
-        //     // console.log(tte[0].phone);
-        //     kakao.maps.event.addListener(marker, 'click', function () {
-        //         // console.log(places);
-        //         // console.log(tte[0].phone);
-        //         displayInfowindow(marker, title, road_address_name, address_name, phone, detailpage, id, x, y);
-        //         // console.log(detailpage);
-        //
-        //
-        //     });
-        // })(marker, positions[i].title, positions[i].road_address_name, positions[i].address_name, positions[i].phone, positions[i].detailpage, positions[i].id, positions[i].lat, positions[i].lng);*/
+        // ps.keywordSearch("포천 " + positions[i].place_name, placesSearchCB);
+
+        // 마커 이미지의 이미지 크기 입니다
+        var imageSize = new kakao.maps.Size(24, 35);
+
+        // 마커 이미지를 생성합니다
+        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+        var marker = new kakao.maps.Marker({
+
+            map: map, // 마커를 표시할 지도
+            position: new kakao.maps.LatLng(positions[i].y, positions[i].x), // 마커의 위치
+            image : markerImage
+        });
+        markers.push(marker);
+        // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+        // 이벤트 리스너로는 클로저를 만들어 등록합니다
+        // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+        // kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+        // kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+        (function (marker, title, road_address_name, address_name, phone,detailpage, id, x,y) {
+            kakao.maps.event.addListener(marker, 'click', function () {
+                displayInfowindow(marker, title, road_address_name, address_name, phone, detailpage, id, x, y);
+            });
+        })(marker, positions[i].title, positions[i].road_address_name, positions[i].address_name, positions[i].phone, positions[i].detailpage, positions[i].id, positions[i].lat, positions[i].lng);
     }
 }
-/*var count = 1;
-function tmp(data, positions) {
-    // console.log(toto[1].place_name + "원본: " + positions[1].place_name);
-    var d = data[0].place_name;
+/*var tp = 0;
+var count = 1;
+function tmp(data) {
+    console.log("입력 : " + data.place_name)
+    console.log("원본: " + positions[tp].place_name);
+    var d = data.place_name;
     for(var i=0;i<positions.length;i++) {
 
-        var p = positions[i].place_name;;
+        var p = positions[tp].place_name;;
         console.log("positions" + p);
 
         console.log(d);
@@ -75,7 +77,9 @@ function tmp(data, positions) {
         else {
             console.log("실패");
         }
+
     }
+    tp++;
 }*/
 
 // 인포윈도우를 표시하는 클로저를 만드는 함수입니다

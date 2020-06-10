@@ -40,7 +40,7 @@
         }
 
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("select * from Shop where ShopId<=6755");
+        ResultSet rs = stmt.executeQuery("select * from Shop where Address like '%김포시%'");
         while (rs.next()) {
             JSONObject obj = new JSONObject();
             obj.put("place_name", rs.getString("ShopName"));
@@ -48,7 +48,7 @@
             obj.put("x", rs.getString("Longititude"));
             obj.put("road_address_name", rs.getString("StreetNameAddress"));
             obj.put("address_name", rs.getString("Address"));
-            obj.put("phone", rs.getString("Url"));
+            obj.put("phone", rs.getString("PhoneNumber"));
             obj.put("detailpage", rs.getString("Url"));
 //                    obj.put("id", rs.getString("id"));
             jsonArray.add(obj);
@@ -56,6 +56,8 @@
     } catch (Exception e) {
         test += "아무거나";
     }
+
+
 %>
 <%--<div id="map" style="width:1000px;height:600px;"></div>--%>
 <input type="button" onclick="getjson('location/seouldetail.json','서울'), panTo(37.566833213145486, 126.97865508601613);" value="서울">
@@ -77,6 +79,7 @@
 <input type="button" onclick="getjson('location/jeju.json', '제주도'), panTo(33.48892014636885, 126.49822643823065);" value="제주도">
 <button onclick="hideMarkers()">마커 감추기</button>
 <button onclick="showMarkers()">마커 보이기</button>
+<button onclick="makemarkerjson(positions)">테스트</button>
 <button onclick="displayPlaces(positions)">생성</button>
 <div class="map_wrap">
   <div id="map" style="width:100%;height:500px;position:relative;overflow:hidden;"></div>
@@ -98,7 +101,7 @@
 <script src="js/polygon.js" type="text/javascript"></script>
 <script src="js/search.js" type="text/javascript"></script>
 <script>
-    var positions =<%=jsonArray%>
+    var kimpo =<%=jsonArray%>
 </script>
 <script src="js/loaddata.js" type="text/javascript"></script>
 <%--<%@ include file="polygon.jsp" %>--%>

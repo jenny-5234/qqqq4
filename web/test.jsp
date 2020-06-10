@@ -37,15 +37,15 @@
         }
 
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("select * from Shop where ShopId<=6710");
+        ResultSet rs = stmt.executeQuery("select TOP 60 ShopName, Latitude, Longititude, StreetNameAddress, Address, PhoneNumber, Url from Shop where StreetNameAddress like '%포천시%';");
         while (rs.next()) {
             JSONObject obj = new JSONObject();
-            obj.put("place_name", rs.getString("ShopName"));
+            obj.put("title", rs.getString("ShopName"));
             obj.put("y", rs.getString("Latitude"));
             obj.put("x", rs.getString("Longititude"));
             obj.put("road_address_name", rs.getString("StreetNameAddress"));
             obj.put("address_name", rs.getString("Address"));
-            obj.put("phone", rs.getString("Url"));
+            obj.put("phone", rs.getString("PhoneNumber"));
             obj.put("detailpage", rs.getString("Url"));
 //                    obj.put("id", rs.getString("id"));
             jsonArray.add(obj);
@@ -55,7 +55,6 @@
     }
 %>
 <p><%=test%></p>
-<%--<p><%=jsonArray%></p>--%>
 <p><%=jsonArray%></p>
 <%--<div id="map" style="width:1000px;height:600px;"></div>--%>
 <input type="button" onclick="getjson('location/jeju.json', '제주도'), panTo(33.48892014636885, 126.49822643823065);" value="제주도">
