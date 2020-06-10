@@ -24,6 +24,7 @@
 <%
     String test = "";
     JSONArray jsonArray = new JSONArray();
+    JSONArray jsonArray2 = new JSONArray();
 
     try {
         Connection conn = null;
@@ -37,7 +38,7 @@
         }
 
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("select TOP 60 ShopName, Latitude, Longititude, StreetNameAddress, Address, PhoneNumber, Url from Shop where StreetNameAddress like '%포천시%';");
+        ResultSet rs = stmt.executeQuery("select TOP 60 ShopName, Latitude, Longititude, StreetNameAddress, Address, PhoneNumber, Url from Shop where StreetNameAddress like '%김포시%'");
         while (rs.next()) {
             JSONObject obj = new JSONObject();
             obj.put("title", rs.getString("ShopName"));
@@ -50,12 +51,26 @@
 //                    obj.put("id", rs.getString("id"));
             jsonArray.add(obj);
         }
+        ResultSet rs2 = stmt.executeQuery("select TOP 60 ShopName, Latitude, Longititude, StreetNameAddress, Address, PhoneNumber, Url from Shop where StreetNameAddress like '%가평군%'");
+        while (rs2.next()) {
+            JSONObject obj = new JSONObject();
+            obj.put("title", rs2.getString("ShopName"));
+            obj.put("y", rs2.getString("Latitude"));
+            obj.put("x", rs2.getString("Longititude"));
+            obj.put("road_address_name", rs2.getString("StreetNameAddress"));
+            obj.put("address_name", rs2.getString("Address"));
+            obj.put("phone", rs2.getString("PhoneNumber"));
+            obj.put("detailpage", rs2.getString("Url"));
+//                    obj.put("id", rs.getString("id"));
+            jsonArray2.add(obj);
+        }
     } catch (Exception e){
         test += "아무거나";
     }
 %>
 <p><%=test%></p>
 <p><%=jsonArray%></p>
+<p><%=jsonArray2%>
 <%--<div id="map" style="width:1000px;height:600px;"></div>--%>
 <input type="button" onclick="getjson('location/jeju.json', '제주도'), panTo(33.48892014636885, 126.49822643823065);" value="제주도">
 <button onclick="hideMarkers()">마커 감추기</button>
@@ -82,7 +97,8 @@
 <script src="js/polygon.js" type="text/javascript"></script>
 <script src="js/search.js" type="text/javascript"></script>
 <script>
-    var positions =<%=jsonArray%>
+    var kimpo =<%=jsonArray%>
+    var gapyeong =<%=jsonArray2%>
 </script>
 <script src="js/loaddata.js" type="text/javascript"></script>
 <%--<%@ include file="polygon.jsp" %>--%>
