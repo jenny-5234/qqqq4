@@ -24,6 +24,56 @@
   <link rel="stylesheet" type="text/css" href="css/search.css">
 </head>
 <body>
+<%
+  String test = "";
+  JSONArray jsonArray = new JSONArray();
+  JSONArray jsonArray2 = new JSONArray();
+
+  try {
+    Connection conn = null;
+    Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+    String connString =
+            "jdbc:sqlserver://14.32.18.226:1433;database=YL;user=as;password=1234";
+    conn = DriverManager.getConnection(connString);
+
+    if(conn == null){
+      test += "connection nullexception";
+    }
+
+    Statement stmt = conn.createStatement();
+    ResultSet rs = stmt.executeQuery("select TOP 60 ShopName, Latitude, Longititude, StreetNameAddress, Address, PhoneNumber, Url from Shop where StreetNameAddress like '%김포시%'");
+    while (rs.next()) {
+      JSONObject obj = new JSONObject();
+      obj.put("title", rs.getString("ShopName"));
+      obj.put("y", rs.getString("Latitude"));
+      obj.put("x", rs.getString("Longititude"));
+      obj.put("road_address_name", rs.getString("StreetNameAddress"));
+      obj.put("address_name", rs.getString("Address"));
+      obj.put("phone", rs.getString("PhoneNumber"));
+      obj.put("detailpage", rs.getString("Url"));
+//                    obj.put("id", rs.getString("id"));
+      jsonArray.add(obj);
+    }
+    ResultSet rs2 = stmt.executeQuery("select TOP 60 ShopName, Latitude, Longititude, StreetNameAddress, Address, PhoneNumber, Url from Shop where StreetNameAddress like '%가평군%'");
+    while (rs2.next()) {
+      JSONObject obj = new JSONObject();
+      obj.put("title", rs2.getString("ShopName"));
+      obj.put("y", rs2.getString("Latitude"));
+      obj.put("x", rs2.getString("Longititude"));
+      obj.put("road_address_name", rs2.getString("StreetNameAddress"));
+      obj.put("address_name", rs2.getString("Address"));
+      obj.put("phone", rs2.getString("PhoneNumber"));
+      obj.put("detailpage", rs2.getString("Url"));
+//                    obj.put("id", rs.getString("id"));
+      jsonArray2.add(obj);
+    }
+  } catch (Exception e){
+    test += "아무거나";
+  }
+%>
+<p><%=test%></p>
+<p><%=jsonArray%></p>
+<p><%=jsonArray2%></p>
 <%--<div id="map" style="width:1000px;height:600px;"></div>--%>
 <input type="button" onclick="getjson('location/seouldetail.json','서울'), panTo(37.566833213145486, 126.97865508601613);" value="서울">
 <input type="button" onclick="getjson('location/ggidodetail.json', '경기도'), panTo(37.274999514115, 127.00891869697384);" value="경기">
@@ -61,6 +111,10 @@
 </div>
 <script src="js/polygon.js" type="text/javascript"></script>
 <script src="js/search.js" type="text/javascript"></script>
+<script>
+  var kimpo =<%=jsonArray%>
+  var gapyeong =<%=jsonArray2%>
+</script>
 <script src="js/loaddata.js" type="text/javascript"></script>
 <%--<%@ include file="polygon.jsp" %>--%>
 <%--<%@ include file="search.jsp" %>--%>

@@ -70,7 +70,7 @@
 %>
 <p><%=test%></p>
 <p><%=jsonArray%></p>
-<p><%=jsonArray2%>
+<p><%=jsonArray2%></p>
 <%--<div id="map" style="width:1000px;height:600px;"></div>--%>
 <input type="button" onclick="getjson('location/jeju.json', '제주도'), panTo(33.48892014636885, 126.49822643823065);" value="제주도">
 <button onclick="hideMarkers()">마커 감추기</button>

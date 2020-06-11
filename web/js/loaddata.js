@@ -24,6 +24,10 @@
 ];*/
 var markers = [];
 function makemarkerjson(positions) {
+    var listEl = document.getElementById('placesList');
+    removeAllChildNods(listEl);
+    removeMarker();
+    displayPagination({first: 0, last: 0, totalCount: 0});
     var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
     // console.log(positions[1].place_name);
     for (var i = 0; i < positions.length; i++) {
@@ -43,6 +47,7 @@ function makemarkerjson(positions) {
             position: new kakao.maps.LatLng(positions[i].y, positions[i].x), // 마커의 위치
             image : markerImage
         });
+        marker.setMap(map);
         markers.push(marker);
         // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
         // 이벤트 리스너로는 클로저를 만들어 등록합니다
@@ -53,7 +58,8 @@ function makemarkerjson(positions) {
             kakao.maps.event.addListener(marker, 'click', function () {
                 displayInfowindow(marker, title, road_address_name, address_name, phone, detailpage, id, x, y);
             });
-        })(marker, positions[i].title, positions[i].road_address_name, positions[i].address_name, positions[i].phone, positions[i].detailpage, positions[i].id, positions[i].lat, positions[i].lng);
+        })(marker, positions[i].place_name, positions[i].road_address_name, positions[i].address_name, positions[i].phone, positions[i].detailpage, positions[i].id, positions[i].lat, positions[i].lng);
+
     }
 }
 /*var tp = 0;
