@@ -58,7 +58,7 @@ function makemarkerjson(positions) {
             kakao.maps.event.addListener(marker, 'click', function () {
                 displayInfowindow(marker, title, road_address_name, address_name, phone, detailpage, id, x, y);
             });
-        })(marker, positions[i].place_name, positions[i].road_address_name, positions[i].address_name, positions[i].phone, positions[i].detailpage, positions[i].id, positions[i].lat, positions[i].lng);
+        })(marker, positions[i].place_name, positions[i].road_address_name, positions[i].address_name, positions[i].phone, positions[i].detailpage, positions[i].id, positions[i].x, positions[i].y);
 
     }
 }

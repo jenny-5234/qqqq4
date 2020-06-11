@@ -41,10 +41,10 @@
     }
 
     Statement stmt = conn.createStatement();
-    ResultSet rs = stmt.executeQuery("select TOP 60 ShopName, Latitude, Longititude, StreetNameAddress, Address, PhoneNumber, Url from Shop where StreetNameAddress like '%김포시%'");
+    ResultSet rs = stmt.executeQuery("select ShopName, Latitude, Longititude, StreetNameAddress, Address, PhoneNumber, Url from Shop where StreetNameAddress like '%김포시%'");
     while (rs.next()) {
       JSONObject obj = new JSONObject();
-      obj.put("title", rs.getString("ShopName"));
+      obj.put("place_name", rs.getString("ShopName"));
       obj.put("y", rs.getString("Latitude"));
       obj.put("x", rs.getString("Longititude"));
       obj.put("road_address_name", rs.getString("StreetNameAddress"));
@@ -54,10 +54,10 @@
 //                    obj.put("id", rs.getString("id"));
       jsonArray.add(obj);
     }
-    ResultSet rs2 = stmt.executeQuery("select TOP 60 ShopName, Latitude, Longititude, StreetNameAddress, Address, PhoneNumber, Url from Shop where StreetNameAddress like '%가평군%'");
+    ResultSet rs2 = stmt.executeQuery("select ShopName, Latitude, Longititude, StreetNameAddress, Address, PhoneNumber, Url from Shop where StreetNameAddress like '%가평군%'");
     while (rs2.next()) {
       JSONObject obj = new JSONObject();
-      obj.put("title", rs2.getString("ShopName"));
+      obj.put("place_name", rs2.getString("ShopName"));
       obj.put("y", rs2.getString("Latitude"));
       obj.put("x", rs2.getString("Longititude"));
       obj.put("road_address_name", rs2.getString("StreetNameAddress"));
@@ -72,8 +72,8 @@
   }
 %>
 <p><%=test%></p>
-<p><%=jsonArray%></p>
-<p><%=jsonArray2%></p>
+<%--<p><%=jsonArray%></p>--%>
+<%--<p><%=jsonArray2%></p>--%>
 <%--<div id="map" style="width:1000px;height:600px;"></div>--%>
 <input type="button" onclick="getjson('location/seouldetail.json','서울'), panTo(37.566833213145486, 126.97865508601613);" value="서울">
 <input type="button" onclick="getjson('location/ggidodetail.json', '경기도'), panTo(37.274999514115, 127.00891869697384);" value="경기">

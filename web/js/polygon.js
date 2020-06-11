@@ -55,7 +55,7 @@ function getjson(test, city) {
 
 var polygons = [];                //function 안 쪽에 지역변수로 넣으니깐 폴리곤 하나 생성할 때마다 배열이 비어서 클릭했을 때 전체를 못 없애줌.  그래서 전역변수로 만듦.
 
-
+var yu = "";
 //행정구역 폴리곤
 function displayArea(coordinates, name, city) {
 
@@ -120,13 +120,14 @@ function displayArea(coordinates, name, city) {
                 case("가평군"):
                     console.log("실행");
                     makemarkerjson(gapyeong);
+                    break;
                 /*case("파주시"):
                     console.log("실행"); break;
                 case("고양시"):
                     console.log("실행"); break;*/
                 default:
                     ps.keywordSearch(city + name + " 긴급재난지원금", placesSearchCB);
-
+                console.log("실행");
             }
             yu = name;
         }
