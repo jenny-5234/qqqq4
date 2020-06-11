@@ -222,7 +222,10 @@ function displayInfowindow(marker, title, road_address_name, address_name, phone
             '                <div class="ellipsis">' + road_address_name + '</div>' +
             '                <div class="jibun ellipsis">' + address_name + '</div>' +
             '                <div class="contact">' + phone + '</div>' +
-            '                <div><a href="'+ detailpage +'" target="_blank" class="link">홈페이지</a><a href="https://map.kakao.com/link/to/'+ title + ',' + y + ',' + x +'" target="_blank" class="link">길찾기</a></div>' +
+            '                <span class="ICON-middot"></span>' +
+            '                <div class="detail"><a href="'+ detailpage +'" target="_blank" class="link">상세보기</a></div>' +
+            '                <span class="ICON-middot"></span>' +
+            '                <div class="searchdirections"><a href="https://map.kakao.com/link/to/'+ title + ',' + y + ',' + x +'" target="_blank" class="link">길찾기</a></div>' +
             '            </div>' +
             '        </div>' +
             '    </div>' +

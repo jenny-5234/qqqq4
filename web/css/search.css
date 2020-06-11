@@ -231,7 +231,8 @@
 
 .wrap .info {
     width: 286px;
-    height: 120px;
+    /*height: 120px;*/
+    height: 110px;
     border-radius: 5px;
     border-bottom: 2px solid #ccc;
     border-right: 1px solid #ccc;
@@ -277,7 +278,7 @@
 
 .info .desc {
     position: relative;
-    margin: 1px 0 0 5px;
+    margin: 10px 0 0 20px;
     height: 75px;
 }
 
@@ -298,7 +299,12 @@
 }
 
 .desc .contact {
-    font-size: 12px;
+    /*font-size: 12px;*/
+    float: left;
+    height: 17px;
+    font-size: 13px;
+    line-height: 15px;
+    color: #288756;
 }
 
 /*.info .img {
@@ -324,8 +330,22 @@
 }*/
 
 .info .link {
-    color: #5085BB;
-    margin-right: 10px;
+    /*color: #5085BB;
+    margin-right: 10px;*/
+    float: left;
+    height: 17px;
+    font-size: 12px;
+    line-height: 15px;
+    color: #3d75cc;
+}
+
+.ICON-middot {
+    overflow: hidden;
+    float: left;
+    width: 3px;
+    height: 3px;
+    margin: 9px 5px 0;
+    background: url(//t1.daumcdn.net/localimg/localimages/07/2018/pc/common/img_tooltip_190715.png) no-repeat -216px -139px;
 }
 
 <!--
