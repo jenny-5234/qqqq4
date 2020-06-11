@@ -110,6 +110,7 @@ function displayArea(coordinates, name, city) {
     // 다각형에 click 이벤트를 등록하고 이벤트가 발생하면 다각형의 이름과 면적을 인포윈도우에 표시합니다
     kakao.maps.event.addListener(polygon, 'click', function (mouseEvent) {
         console.log(name);
+
         if(yu!=name) {
             switch (name) {
                 case("김포시"):
@@ -134,6 +135,7 @@ function displayArea(coordinates, name, city) {
         else {
             console.log("미실행");
         }
+        closeOverlay();
         // ps.keywordSearch(city + name + " 긴급재난지원금", placesSearchCB);
 
         /*var content = '<div class="info">' +

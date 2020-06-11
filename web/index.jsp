@@ -92,6 +92,8 @@
 <input type="button" onclick="getjson('location/gwangju.json', '광주광역시'), panTo(35.160108723530996, 126.85163269066601);" value="광주">
 <input type="button" onclick="getjson('location/jeollanamdo.json', '전라남도'), panTo(34.81609068924449, 126.46278335953988);" value="전라남도">
 <input type="button" onclick="getjson('location/jeju.json', '제주도'), panTo(33.48892014636885, 126.49822643823065);" value="제주도">
+<button onclick="hideMarkers()">감추기</button>
+<button onclick="showMarkers()">보이기</button>
 <div class="map_wrap">
   <div id="map" style="width:100%;height:500px;position:relative;overflow:hidden;"></div>
 

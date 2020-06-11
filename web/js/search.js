@@ -22,6 +22,7 @@ function searchPlaces() {
     }
     // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
     // ps.keywordSearch( keyword, placesSearchCB);
+    yu = "";
     ps.keywordSearch( keyword, placesSearchCB, {
         // size:5,
         // page:10
@@ -209,26 +210,41 @@ function displayPagination(pagination) {
 function displayInfowindow(marker, title, road_address_name, address_name, phone, detailpage, id, x, y) {
     // var content = '<div style="padding-left:5px;padding-right:25px;z-index:1;">' + title + '</div>';
     // console.log(title,x,y,detailpage,phone);
+    if (phone || detailpage) {
+        var content = '<div class="wrap">' +
+            '    <div class="info">' +
+            '        <div class="title">' +
+            title +
+            '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
+            '        </div>' +
+            '        <div class="body">' +
+            '            <div class="desc">' +
+            '                <div class="ellipsis">' + road_address_name + '</div>' +
+            '                <div class="jibun ellipsis">' + address_name + '</div>' +
+            '                <div class="contact">' + phone + '</div>' +
+            '                <div><a href="'+ detailpage +'" target="_blank" class="link">홈페이지</a><a href="https://map.kakao.com/link/to/'+ title + ',' + y + ',' + x +'" target="_blank" class="link">길찾기</a></div>' +
+            '            </div>' +
+            '        </div>' +
+            '    </div>' +
+            '</div>';
+    }
+    else {
+        var content = '<div class="wrap">' +
+            '    <div class="info">' +
+            '        <div class="title">' +
+            title +
+            '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
+            '        </div>' +
+            '        <div class="body">' +
+            '            <div class="desc">' +
+            '                <div class="ellipsis">' + road_address_name + '</div>' +
+            '                <div class="jibun ellipsis">' + address_name + '</div>' +
+            '            </div>' +
+            '        </div>' +
+            '    </div>' +
+            '</div>';
+    }
 
-    var content = '<div class="wrap">' +
-        '    <div class="info">' +
-        '        <div class="title">' +
-        title +
-        '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
-        '        </div>' +
-        '        <div class="body">' +
-        '            <div class="img">' +
-        '                <img src="" width="73" height="70">' +
-        '           </div>' +
-        '            <div class="desc">' +
-        '                <div class="ellipsis">' + road_address_name + '</div>' +
-        '                <div class="jibun ellipsis">' + address_name + '</div>' +
-        '                <div class="contact">' + phone + '</div>' +
-        '                <div><a href="'+ detailpage +'" target="_blank" class="link">홈페이지</a><a href="https://map.kakao.com/link/to/'+ title + ',' + y + ',' + x +'" target="_blank" class="link">길찾기</a></div>' +
-        '            </div>' +
-        '        </div>' +
-        '    </div>' +
-        '</div>';
     infowindow.setContent(content);
     infowindow.open(map, marker);
 }

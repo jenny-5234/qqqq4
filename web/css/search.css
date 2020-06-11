@@ -277,7 +277,7 @@
 
 .info .desc {
     position: relative;
-    margin: 6px 0 0 90px;
+    margin: 1px 0 0 5px;
     height: 75px;
 }
 
@@ -301,7 +301,7 @@
     font-size: 12px;
 }
 
-.info .img {
+/*.info .img {
     position: absolute;
     top: 6px;
     left: 5px;
@@ -310,7 +310,7 @@
     border: 1px solid #ddd;
     color: #888;
     overflow: hidden;
-}
+}*/
 
 /*.info:after {
     content: '';
