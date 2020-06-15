@@ -115,17 +115,192 @@ function displayArea(coordinates, name, city) {
             switch (name) {
                 case("김포시"):
                     console.log("실행");
-                    makemarkerjson(kimpo);
+                    $.getJSON("city_mark_info/kimpo.json", function (data) {
+                        makemarkerjson(data);
+                        console.log(data);
+                    });
                     // console.log(yu + name + (yu == name));
                     break;
                 case("가평군"):
                     console.log("실행");
-                    makemarkerjson(gapyeong);
+                    $.getJSON("city_mark_info/gapyeong.json", function (data) {
+                        makemarkerjson(data);
+                    });
                     break;
-                /*case("파주시"):
-                    console.log("실행"); break;
+                case("안산시"):
+                    console.log("실행");
+                    $.getJSON("city_mark_info/ansan.json", function (data) {
+                        makemarkerjson(data);
+                    });
+                    break;
+                case("안성시"):
+                    console.log("실행");
+                    $.getJSON("city_mark_info/anseong.json", function (data) {
+                        makemarkerjson(data);
+                    });
+                    break;
+                case("안양시"):
+                    console.log("실행");
+                    $.getJSON("city_mark_info/anyang.json", function (data) {
+                        makemarkerjson(data);
+                    });
+                    break;
+                case("부천시"):
+                    console.log("실행");
+                    $.getJSON("city_mark_info/bucheon.json", function (data) {
+                        makemarkerjson(data);
+                    });
+                    break;
+                case("동두천시"):
+                    console.log("실행");
+                    $.getJSON("city_mark_info/dongducheon.json", function (data) {
+                        makemarkerjson(data);
+                    });
+                    break;
                 case("고양시"):
-                    console.log("실행"); break;*/
+                    console.log("실행");
+                    $.getJSON("city_mark_info/goyang.json", function (data) {
+                        makemarkerjson(data);
+                    });
+                    break;
+                case("군포시"):
+                    console.log("실행");
+                    $.getJSON("city_mark_info/gunpo.json", function (data) {
+                        makemarkerjson(data);
+                    });
+                    break;
+                case("구리시"):
+                    console.log("실행");
+                    $.getJSON("city_mark_info/guri.json", function (data) {
+                        makemarkerjson(data);
+                    });
+                    break;
+                case("과천시"):
+                    console.log("실행");
+                    $.getJSON("city_mark_info/gwacheon.json", function (data) {
+                        makemarkerjson(data);
+                    });
+                    break;
+                case("광주시"):
+                    console.log("실행");
+                    $.getJSON("city_mark_info/gwangju.json", function (data) {
+                        makemarkerjson(data);
+                    });
+                    break;
+                case("광명시"):
+                    console.log("실행");
+                    $.getJSON("city_mark_info/gwangmyeong.json", function (data) {
+                        makemarkerjson(data);
+                    });
+                    break;
+                case("하남시"):
+                    console.log("실행");
+                    $.getJSON("city_mark_info/hanam.json", function (data) {
+                        makemarkerjson(data);
+                    });
+                    break;
+                case("화성시"):
+                    console.log("실행");
+                    $.getJSON("city_mark_info/hwaseong.json", function (data) {
+                        makemarkerjson(data);
+                    });
+                    break;
+                case("이천시"):
+                    console.log("실행");
+                    $.getJSON("city_mark_info/icheon.json", function (data) {
+                        makemarkerjson(data);
+                    });
+                    break;
+                case("남양주시"):
+                    console.log("실행");
+                    $.getJSON("city_mark_info/namyangju.json", function (data) {
+                        makemarkerjson(data);
+                    });
+                    break;
+                case("오산시"):
+                    console.log("실행");
+                    $.getJSON("city_mark_info/osan.json", function (data) {
+                        makemarkerjson(data);
+                    });
+                    break;
+                case("파주시"):
+                    console.log("실행");
+                    $.getJSON("city_mark_info/paju.json", function (data) {
+                        makemarkerjson(data);
+                    });
+                    break;
+                case("포천시"):
+                    console.log("실행");
+                    $.getJSON("city_mark_info/pocheon.json", function (data) {
+                        makemarkerjson(data);
+                    });
+                    break;
+                case("평택시"):
+                    console.log("실행");
+                    $.getJSON("city_mark_info/pyeongtaek.json", function (data) {
+                        makemarkerjson(data);
+                    });
+                    break;
+                case("성남시"):
+                    console.log("실행");
+                    $.getJSON("city_mark_info/seongnam.json", function (data) {
+                        makemarkerjson(data);
+                    });
+                    break;
+                case("시흥시"):
+                    console.log("실행");
+                    $.getJSON("city_mark_info/siheung.json", function (data) {
+                        makemarkerjson(data);
+                    });
+                    break;
+                case("수원시"):
+                    console.log("실행");
+                    $.getJSON("city_mark_info/suwon.json", function (data) {
+                        makemarkerjson(data);
+                    });
+                    break;
+                case("의정부시"):
+                    console.log("실행");
+                    $.getJSON("city_mark_info/uijeongbu.json", function (data) {
+                        makemarkerjson(data);
+                    });
+                    break;
+                case("의왕시"):
+                    console.log("실행");
+                    $.getJSON("city_mark_info/uiwang.json", function (data) {
+                        makemarkerjson(data);
+                    });
+                    break;
+                case("양주시"):
+                    console.log("실행");
+                    $.getJSON("city_mark_info/yangju.json", function (data) {
+                        makemarkerjson(data);
+                    });
+                    break;
+                case("양평군"):
+                    console.log("실행");
+                    $.getJSON("city_mark_info/yangpyeong.json", function (data) {
+                        makemarkerjson(data);
+                    });
+                    break;
+                case("여주시"):
+                    console.log("실행");
+                    $.getJSON("city_mark_info/yeoju.json", function (data) {
+                        makemarkerjson(data);
+                    });
+                    break;
+                case("연천군"):
+                    console.log("실행");
+                    $.getJSON("city_mark_info/yeoncheon.json", function (data) {
+                        makemarkerjson(data);
+                    });
+                    break;
+                case("용인시"):
+                    console.log("실행");
+                    $.getJSON("city_mark_info/yongin.json", function (data) {
+                        makemarkerjson(data);
+                    });
+                    break;
                 default:
                     ps.keywordSearch(city + name + " 긴급재난지원금", placesSearchCB);
                 console.log("실행");

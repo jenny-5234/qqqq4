@@ -82,7 +82,7 @@ function displayPlaces(places) {
         // 마커와 검색결과 항목에 mouseover 했을때
         // 해당 장소에 인포윈도우에 장소명을 표시합니다
         // mouseout 했을 때는 인포윈도우를 닫습니다
-        (function (marker, title, road_address_name, address_name, phone, detailpage ,id, x, y) {
+        (function (marker, place_name, road_address_name, address_name, phone, place_url ,id, x, y) {
             kakao.maps.event.addListener(marker, 'mouseover', function() {
 
             });
@@ -92,11 +92,13 @@ function displayPlaces(places) {
             });
 
             kakao.maps.event.addListener(marker, 'click', function () {
-                displayInfowindow(marker, title, road_address_name, address_name, phone, detailpage, id, x, y);
+                displayInfowindow(marker, place_name, road_address_name, address_name, phone, place_url, id, x, y);
+                // var op = JSON.stringify(places[0]);
+                // console.log(op);
             });
 
             itemEl.onclick = function () {
-                displayInfowindow(marker, title, road_address_name, address_name, phone, detailpage, id, x, y);
+                displayInfowindow(marker, place_name, road_address_name, address_name, phone, place_url, id, x, y);
                 map.setBounds(bounds);
             }
 
@@ -122,7 +124,7 @@ function displayPlaces(places) {
 
 // 검색결과 항목을 Element로 반환하는 함수입니다
 function getListItem(index, places) {
-
+    //TODO: DB에서 검색해서 출력할 때는 다른 이미지 쓰게하기
     var el = document.createElement('li'),
         itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
             '<div class="info">' +
@@ -134,9 +136,10 @@ function getListItem(index, places) {
     } else {
         itemStr += '    <span>' +  places.address_name  + '</span>';
     }
-
-    itemStr += '  <span class="tel">' + places.phone  + '</span>' +
-        '</div>';
+    if (places.phone) {
+        itemStr += '  <span class="tel">' + places.phone  + '</span>' +
+            '</div>';
+    }
 
     el.innerHTML = itemStr;
     el.className = 'item';
@@ -146,16 +149,16 @@ function getListItem(index, places) {
 
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
 function addMarker(position, idx, title) {
-    var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
-    // var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-        imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
-        // imageSize = new kakao.maps.Size(24, 35),
-        imgOptions =  {
+    // var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+    var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+        // imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
+        imageSize = new kakao.maps.Size(24, 35),
+        /*imgOptions =  {
             spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
             spriteOrigin : new kakao.maps.Point(0, (idx*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
             offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
-        },
-        markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),//, imgOptions
+        },*/
+        markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize),//, imgOptions
         marker = new kakao.maps.Marker({
             position: position, // 마커의 위치
             image: markerImage
@@ -207,14 +210,14 @@ function displayPagination(pagination) {
 
 // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
 // 인포윈도우에 장소명을 표시합니다
-function displayInfowindow(marker, title, road_address_name, address_name, phone, detailpage, id, x, y) {
+function displayInfowindow(marker, place_name, road_address_name, address_name, phone, place_url, id, x, y) {
     // var content = '<div style="padding-left:5px;padding-right:25px;z-index:1;">' + title + '</div>';
     // console.log(title,x,y,detailpage,phone);
-    if (phone || detailpage) {
+    if (phone || place_url) {
         var content = '<div class="wrap">' +
             '    <div class="info">' +
             '        <div class="title">' +
-            title +
+            place_name +
             '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
             '        </div>' +
             '        <div class="body">' +
@@ -223,9 +226,9 @@ function displayInfowindow(marker, title, road_address_name, address_name, phone
             '                <div class="jibun ellipsis">' + address_name + '</div>' +
             '                <div class="contact">' + phone + '</div>' +
             '                <span class="ICON-middot"></span>' +
-            '                <div class="detail"><a href="'+ detailpage +'" target="_blank" class="link">상세보기</a></div>' +
+            '                <div class="detail"><a href="'+ place_url +'" target="_blank" class="link">상세보기</a></div>' +
             '                <span class="ICON-middot"></span>' +
-            '                <div class="searchdirections"><a href="https://map.kakao.com/link/to/'+ title + ',' + y + ',' + x +'" target="_blank" class="link">길찾기</a></div>' +
+            '                <div class="searchdirections"><a href="https://map.kakao.com/link/to/'+ place_name + ',' + y + ',' + x +'" target="_blank" class="link">길찾기</a></div>' +
             '            </div>' +
             '        </div>' +
             '    </div>' +
@@ -235,13 +238,14 @@ function displayInfowindow(marker, title, road_address_name, address_name, phone
         var content = '<div class="wrap">' +
             '    <div class="info">' +
             '        <div class="title">' +
-            title +
+            place_name +
             '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
             '        </div>' +
             '        <div class="body">' +
             '            <div class="desc">' +
             '                <div class="ellipsis">' + road_address_name + '</div>' +
             '                <div class="jibun ellipsis">' + address_name + '</div>' +
+            '                <div class="searchdirections"><a href="https://map.kakao.com/link/to/'+ place_name + ',' + y + ',' + x +'" target="_blank" class="link">길찾기</a></div>' +
             '            </div>' +
             '        </div>' +
             '    </div>' +

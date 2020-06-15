@@ -54,11 +54,11 @@ function makemarkerjson(positions) {
         // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
         // kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
         // kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-        (function (marker, title, road_address_name, address_name, phone,detailpage, id, x,y) {
+        (function (marker, title, road_address_name, address_name, phone,place_url, id, x,y) {
             kakao.maps.event.addListener(marker, 'click', function () {
-                displayInfowindow(marker, title, road_address_name, address_name, phone, detailpage, id, x, y);
+                displayInfowindow(marker, title, road_address_name, address_name, phone, place_url, id, x, y);
             });
-        })(marker, positions[i].place_name, positions[i].road_address_name, positions[i].address_name, positions[i].phone, positions[i].detailpage, positions[i].id, positions[i].x, positions[i].y);
+        })(marker, positions[i].place_name, positions[i].road_address_name, positions[i].address_name, positions[i].phone, positions[i].place_url, positions[i].id, positions[i].x, positions[i].y);
 
     }
 }
