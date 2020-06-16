@@ -26,6 +26,7 @@ function searchPlaces() {
     ps.keywordSearch( keyword, placesSearchCB, {
         // size:5,
         // page:10
+        // location: new kakao.maps.LatLng(37.3081200142, 126.8306536124)
     });
 }
 

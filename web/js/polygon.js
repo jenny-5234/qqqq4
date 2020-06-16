@@ -1,6 +1,6 @@
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div
     mapOption = {
-        center: new kakao.maps.LatLng(37.36163453050286, 126.93520310836283), // 지도의 중심좌표 37.49461890613009, 127.02760319558533
+        center: new kakao.maps.LatLng(37.49461890613009, 127.02760319558533), // 지도의 중심좌표 37.49461890613009, 127.02760319558533
         level: 5 // 지도의 확대 레벨
     };
 
@@ -16,8 +16,13 @@ var clusterer = new kakao.maps.MarkerClusterer({
     minLevel: 5 // 클러스터 할 최소 지도 레벨
 });
 
-/*var mapTypeControl = new kakao.maps.MapTypeControl();
-map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);*/
+/***
+ //지도 타입 변경 컨트롤러
+ */
+/*
+var mapTypeControl = new kakao.maps.MapTypeControl();
+map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+*/
 
 var zoomControl = new kakao.maps.ZoomControl();
 map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
@@ -41,7 +46,7 @@ if (navigator.geolocation) {
 
 } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
 
-    var locPosition = new kakao.maps.LatLng(37.49461890613009, 127.02760319558533),
+    var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),
         message = 'geolocation을 사용할수 없어요..'
 
     displayMarker(locPosition, message);
@@ -336,25 +341,44 @@ function makecluster(path, x, y) {
                     position: new kakao.maps.LatLng(data[each].y, data[each].x)
                 });
                 kakao.maps.event.addListener(marker, 'click', function () {
-                    var content = '<div class="wrap">' +
-                        '    <div class="info">' +
-                        '        <div class="title">' +
-                        data[each].place_name +
-                        '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
-                        '        </div>' +
-                        '        <div class="body">' +
-                        '            <div class="desc">' +
-                        '                <div class="ellipsis">' + data[each].road_address_name + '</div>' +
-                        '                <div class="jibun ellipsis">' + data[each].address_name + '</div>' +
-                        '                <div class="contact">' + data[each].phone + '</div>' +
-                        '                <span class="ICON-middot"></span>' +
-                        '                <div class="detail"><a href="' + data[each].place_url + '" target="_blank" class="link">상세보기</a></div>' +
-                        '                <span class="ICON-middot"></span>' +
-                        '                <div class="searchdirections"><a href="https://map.kakao.com/link/to/' + data[each].place_name + ',' + data[each].y + ',' + data[each].x + '" target="_blank" class="link">길찾기</a></div>' +
-                        '            </div>' +
-                        '        </div>' +
-                        '    </div>' +
-                        '</div>';
+                    if (data[each].phone || data[each].place_url) {
+                        var content = '<div class="wrap">' +
+                            '    <div class="info">' +
+                            '        <div class="title">' +
+                            data[each].place_name +
+                            '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
+                            '        </div>' +
+                            '        <div class="body">' +
+                            '            <div class="desc">' +
+                            '                <div class="ellipsis">' + data[each].road_address_name + '</div>' +
+                            '                <div class="jibun ellipsis">' + data[each].address_name + '</div>' +
+                            '                <div class="contact">' + data[each].phone + '</div>' +
+                            '                <span class="ICON-middot"></span>' +
+                            '                <div class="detail"><a href="'+ data[each].place_url +'" target="_blank" class="link">상세보기</a></div>' +
+                            '                <span class="ICON-middot"></span>' +
+                            '                <div class="searchdirections"><a href="https://map.kakao.com/link/to/'+ data[each].place_name + ',' + data[each].y + ',' + data[each].x +'" target="_blank" class="link">길찾기</a></div>' +
+                            '            </div>' +
+                            '        </div>' +
+                            '    </div>' +
+                            '</div>';
+                    }
+                    else {
+                        var content = '<div class="wrap">' +
+                            '    <div class="info">' +
+                            '        <div class="title">' +
+                            data[each].place_name +
+                            '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
+                            '        </div>' +
+                            '        <div class="body">' +
+                            '            <div class="desc">' +
+                            '                <div class="ellipsis">' + data[each].road_address_name + '</div>' +
+                            '                <div class="jibun ellipsis">' + data[each].address_name + '</div>' +
+                            '                <div class="searchdirections"><a href="https://map.kakao.com/link/to/'+ data[each].place_name + ',' + data[each].y + ',' + data[each].x +'" target="_blank" class="link">길찾기</a></div>' +
+                            '            </div>' +
+                            '        </div>' +
+                            '    </div>' +
+                            '</div>';
+                    }
                     infowindow.setContent(content);
                     infowindow.open(map, marker);
                     // info.setMap(map);
