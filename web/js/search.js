@@ -67,6 +67,7 @@ function displayPlaces(places) {
 
     // 지도에 표시되고 있는 마커를 제거합니다
     removeMarker();
+    clusterer.clear();
 
     // var yt = {totalCount:45, hasNextPage: true, hasPrevPage: false, first: 1, current: 1};
     // displayPagination({first: 1, hasNextPage: true, hasPrevPage: false, last: 3,perPage: 15,totalCount: 45});
@@ -148,6 +149,7 @@ function getListItem(index, places) {
 }
 
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
+//TODO:전부 클러스터로 한다면 검색 시 이미지는 원래대로 해놓기
 function addMarker(position, idx, title) {
     // var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
     var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";

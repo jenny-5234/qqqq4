@@ -9,6 +9,13 @@ var map = new kakao.maps.Map(mapContainer, mapOption),
     customOverlay = new kakao.maps.CustomOverlay({}),
     infowindow = new kakao.maps.InfoWindow({removable: true});
 
+// 마커 클러스터러를 생성합니다
+var clusterer = new kakao.maps.MarkerClusterer({
+    map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
+    averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+    minLevel: 5 // 클러스터 할 최소 지도 레벨
+});
+
 // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
 /*if (navigator.geolocation) {
 
@@ -39,6 +46,7 @@ function getjson(test, city) {
     console.log(test);
     deletePolygon(polygons);
     removeMarker();
+    clusterer.clear();
     $.getJSON(test, function (geojson) {
         var data = geojson.features;
         var coordinates = [];    //좌표 저장할 배열
@@ -111,257 +119,163 @@ function displayArea(coordinates, name, city) {
     kakao.maps.event.addListener(polygon, 'click', function (mouseEvent) {
         console.log(name);
         // polygons[34].setMap(null);
+        /*var latlng = mouseEvent.latLng;
+        console.log("위도: " + latlng.getLat() + "경도: " + latlng.getLng());*/ //위도 경도 알아내기
         if(yu!=name) {
             switch (name) {
                 case("김포시"):
                     console.log("실행");
-                    $.get("city_mark_info/kimpo.json", function(data) {
-                        // console.log(data);
-                        var markers = $(data).map(function (each) {
-                            var marker = new kakao.maps.Marker({
-                                position: new kakao.maps.LatLng(data[each].y, data[each].x)
-                            });
-                            kakao.maps.event.addListener(marker, 'click', function () {
-                                var content = '<div class="wrap">' +
-                                    '    <div class="info">' +
-                                    '        <div class="title">' +
-                                    data[each].place_name +
-                                    '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
-                                    '        </div>' +
-                                    '        <div class="body">' +
-                                    '            <div class="desc">' +
-                                    '                <div class="ellipsis">' + data[each].road_address_name + '</div>' +
-                                    '                <div class="jibun ellipsis">' + data[each].address_name + '</div>' +
-                                    '                <div class="contact">' + data[each].phone + '</div>' +
-                                    '                <span class="ICON-middot"></span>' +
-                                    '                <div class="detail"><a href="'+ data[each].place_url +'" target="_blank" class="link">상세보기</a></div>' +
-                                    '                <span class="ICON-middot"></span>' +
-                                    '                <div class="searchdirections"><a href="https://map.kakao.com/link/to/'+ data[each].place_name + ',' + data[each].y + ',' + data[each].x +'" target="_blank" class="link">길찾기</a></div>' +
-                                    '            </div>' +
-                                    '        </div>' +
-                                    '    </div>' +
-                                    '</div>';
-                                infowindow.setContent(content);
-                                infowindow.open(map, marker);
-                                // info.setMap(map);
-                            });
-
-                            return marker;
-                        });
-                        // 클러스터러에 마커들을 추가합니다
-                        clusterer.addMarkers(markers);
-                    });
+                    makecluster("city_mark_info/kimpo.json",37.61527678908309, 126.71565392785833);
                     deletepartPolygon(polygons, 16);
-                    // console.log(yu + name + (yu == name));
                     break;
                 case("가평군"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/gapyeong.json", function (data) {
-                        makemarkerjson(data);
-                    });
+                    makecluster("city_mark_info/gapyeong.json", 37.83144628724424, 127.50956510475636);
                     deletepartPolygon(polygons, 21);
                     break;
                 case("안산시"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/ansan.json", function (data) {
-                        makemarkerjson(data);
-                    });
+                    makecluster("city_mark_info/ansan.json", 37.32191305982758, 126.8308372448452);
                     deletepartPolygon(polygons, 26);
                     break;
                 case("안성시"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/anseong.json", function (data) {
-                        makemarkerjson(data);
-                    });
+                    makecluster("city_mark_info/anseong.json", 37.0080057984534, 127.2797170597116);
                     deletepartPolygon(polygons, 15);
                     break;
                 case("안양시"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/anyang.json", function (data) {
-                        makemarkerjson(data);
-                    });
+                    makecluster("city_mark_info/anyang.json", 37.3942615042009, 126.95685487680574);
                     deletepartPolygon(polygons, 29);
                     break;
                 case("부천시"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/bucheon.json", function (data) {
-                        makemarkerjson(data);
-                    });
+                    makecluster("city_mark_info/bucheon.json", 37.50351763465878, 126.76603786718101);
                     deletepartPolygon(polygons, 1);
                     break;
                 case("동두천시"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/dongducheon.json", function (data) {
-                        makemarkerjson(data);
-                    });
+                    makecluster("city_mark_info/dongducheon.json", 37.903606760983585, 127.06043391358757);
                     deletepartPolygon(polygons, 4);
                     break;
                 case("고양시"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/goyang.json", function (data) {
-                        makemarkerjson(data);
-                    });
+                    makecluster("city_mark_info/goyang.json", 37.65842259635158, 126.83195226626859);
                     deletepartPolygon(polygons, 23);
                     break;
                 case("군포시"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/gunpo.json", function (data) {
-                        makemarkerjson(data);
-                    });
+                    makecluster("city_mark_info/gunpo.json", 37.36163453050286, 126.93520310836283);
                     deletepartPolygon(polygons, 10);
                     break;
                 case("구리시"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/guri.json", function (data) {
-                        makemarkerjson(data);
-                    });
+                    makecluster("city_mark_info/guri.json", 37.59436814152007, 127.12964243445381);
                     deletepartPolygon(polygons, 6);
                     break;
                 case("과천시"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/gwacheon.json", function (data) {
-                        makemarkerjson(data);
-                    });
+                    makecluster("city_mark_info/gwacheon.json", 37.429239559910044, 126.98770743965969);
                     deletepartPolygon(polygons, 5);
                     break;
                 case("광주시"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/gwangju.json", function (data) {
-                        makemarkerjson(data);
-                    });
+                    makecluster("city_mark_info/gwangju.json",37.42940410458226, 127.25513875335848);
                     deletepartPolygon(polygons, 17);
                     break;
                 case("광명시"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/gwangmyeong.json", function (data) {
-                        makemarkerjson(data);
-                    });
+                    makecluster("city_mark_info/gwangmyeong.json", 37.4785787471002, 126.8646534476972);
                     deletepartPolygon(polygons, 2);
                     break;
                 case("하남시"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/hanam.json", function (data) {
-                        makemarkerjson(data);
-                    });
+                    makecluster("city_mark_info/hanam.json",37.53928087643411, 127.21485835369926);
                     deletepartPolygon(polygons, 12);
                     break;
                 case("화성시"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/hwaseong.json", function (data) {
-                        makemarkerjson(data);
-                    });
+                    makecluster("city_mark_info/hwaseong.json", 37.19954350601318, 126.83147395712996);
                     deletepartPolygon(polygons, 32);
                     break;
                 case("이천시"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/icheon.json", function (data) {
-                        makemarkerjson(data);
-                    });
+                    makecluster("city_mark_info/icheon.json", 37.27227209940599, 127.43508818121765);
                     deletepartPolygon(polygons, 14);
                     break;
                 case("남양주시"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/namyangju.json", function (data) {
-                        makemarkerjson(data);
-                    });
+                    makecluster("city_mark_info/namyangju.json", 37.63603760318754, 127.21647637193799);
                     deletepartPolygon(polygons, 7);
                     break;
                 case("오산시"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/osan.json", function (data) {
-                        makemarkerjson(data);
-                    });
+                    makecluster("city_mark_info/osan.json", 37.14989073484177, 127.07751868124821);
                     deletepartPolygon(polygons, 8);
                     break;
                 case("파주시"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/paju.json", function (data) {
-                        makemarkerjson(data);
-                    });
+                    makecluster("city_mark_info/paju.json", 37.76004992869594, 126.77986886139607);
                     deletepartPolygon(polygons, 13);
                     break;
                 case("포천시"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/pocheon.json", function (data) {
-                        makemarkerjson(data);
-                    });
+                    makecluster("city_mark_info/pocheon.json", 37.894998700762386, 127.20032665354528);
                     deletepartPolygon(polygons, 19);
                     break;
                 case("평택시"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/pyeongtaek.json", function (data) {
-                        makemarkerjson(data);
-                    });
+                    makecluster("city_mark_info/pyeongtaek.json", 36.992262930984346, 127.11268445820784);
                     deletepartPolygon(polygons, 3);
                     break;
                 case("성남시"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/seongnam.json", function (data) {
-                        makemarkerjson(data);
-                    });
+                    makecluster("city_mark_info/seongnam.json",37.41993031887288, 127.1265112485552);
                     deletepartPolygon(polygons, 24);
                     break;
                 case("시흥시"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/siheung.json", function (data) {
-                        makemarkerjson(data);
-                    });
+                    makecluster("city_mark_info/siheung.json", 37.38012362846484, 126.8029760804121);
                     deletepartPolygon(polygons, 9);
                     break;
                 case("수원시"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/suwon.json", function (data) {
-                        makemarkerjson(data);
-                    });
+                    makecluster("city_mark_info/suwon.json", 37.2635914378312, 127.02871082779522);
                     deletepartPolygon(polygons, 25);
                     break;
                 case("의정부시"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/uijeongbu.json", function (data) {
-                        makemarkerjson(data);
-                    });
+                    makecluster("city_mark_info/uijeongbu.json", 37.73806430212202, 127.03389625756047);
                     deletepartPolygon(polygons, 0);
                     break;
                 case("의왕시"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/uiwang.json", function (data) {
-                        makemarkerjson(data);
-                    });
+                    makecluster("city_mark_info/uiwang.json", 37.344765000866936, 126.96827042256258);
                     deletepartPolygon(polygons, 11);
                     break;
                 case("양주시"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/yangju.json", function (data) {
-                        makemarkerjson(data);
-                    });
+                    makecluster("city_mark_info/yangju.json", 37.78532045762223, 127.04577814226495);
                     deletepartPolygon(polygons, 18);
                     break;
                 case("양평군"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/yangpyeong.json", function (data) {
-                        makemarkerjson(data);
-                    });
+                    makecluster("city_mark_info/yangpyeong.json", 37.491795966977726, 127.48757343156568);
                     deletepartPolygon(polygons, 22);
                     break;
                 case("여주시"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/yeoju.json", function (data) {
-                        makemarkerjson(data);
-                    });
+                    makecluster("city_mark_info/yeoju.json", 37.298431053050095, 127.63705490477399);
                     deletepartPolygon(polygons, 20);
                     break;
                 case("연천군"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/yeoncheon.json", function (data) {
-                        makemarkerjson(data);
-                    });
+                    makecluster("city_mark_info/yeoncheon.json", 38.09652315873178, 127.07534723541715);
                     deletepartPolygon(polygons, 30);
                     break;
                 case("용인시"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/yongin.json", function (data) {
-                        makemarkerjson(data);
-                    });
+                    makecluster("city_mark_info/yongin.json", 37.24103944439466, 127.17747953553028);
                     deletepartPolygon(polygons, 31);
                     break;
                 default:
@@ -394,6 +308,58 @@ function displayArea(coordinates, name, city) {
             }});*/
         // deletePolygon(polygons);                    //폴리곤 제거
     });
+}
+
+function makecluster(path, x, y) {
+    map.setLevel(5, {
+        animate: {
+            duration: 500
+        },
+        anchor: new kakao.maps.LatLng(x, y)
+    });
+    setTimeout(function () {
+        $.get(path, function (data) {
+            // console.log(data);
+            var listEl = document.getElementById('placesList');
+            displayPagination({first: 0, last: 0, totalCount: 0});
+            // 검색 결과 목록에 추가된 항목들을 제거합니다
+            removeAllChildNods(listEl);
+            removeMarker();
+            var markers = $(data).map(function (each) {
+                var marker = new kakao.maps.Marker({
+                    position: new kakao.maps.LatLng(data[each].y, data[each].x)
+                });
+                kakao.maps.event.addListener(marker, 'click', function () {
+                    var content = '<div class="wrap">' +
+                        '    <div class="info">' +
+                        '        <div class="title">' +
+                        data[each].place_name +
+                        '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
+                        '        </div>' +
+                        '        <div class="body">' +
+                        '            <div class="desc">' +
+                        '                <div class="ellipsis">' + data[each].road_address_name + '</div>' +
+                        '                <div class="jibun ellipsis">' + data[each].address_name + '</div>' +
+                        '                <div class="contact">' + data[each].phone + '</div>' +
+                        '                <span class="ICON-middot"></span>' +
+                        '                <div class="detail"><a href="' + data[each].place_url + '" target="_blank" class="link">상세보기</a></div>' +
+                        '                <span class="ICON-middot"></span>' +
+                        '                <div class="searchdirections"><a href="https://map.kakao.com/link/to/' + data[each].place_name + ',' + data[each].y + ',' + data[each].x + '" target="_blank" class="link">길찾기</a></div>' +
+                        '            </div>' +
+                        '        </div>' +
+                        '    </div>' +
+                        '</div>';
+                    infowindow.setContent(content);
+                    infowindow.open(map, marker);
+                    // info.setMap(map);
+                });
+
+                return marker;
+            });
+            // 클러스터러에 마커들을 추가합니다
+            clusterer.addMarkers(markers);
+        });
+    }, 1000);
 }
 
 //지도 위 표시되고 있는 폴리곤 제거
