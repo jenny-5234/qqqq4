@@ -115,9 +115,41 @@ function displayArea(coordinates, name, city) {
             switch (name) {
                 case("김포시"):
                     console.log("실행");
-                    $.getJSON("city_mark_info/kimpo.json", function (data) {
-                        makemarkerjson(data);
+                    $.get("city_mark_info/kimpo.json", function(data) {
                         // console.log(data);
+                        var markers = $(data).map(function (each) {
+                            var marker = new kakao.maps.Marker({
+                                position: new kakao.maps.LatLng(data[each].y, data[each].x)
+                            });
+                            kakao.maps.event.addListener(marker, 'click', function () {
+                                var content = '<div class="wrap">' +
+                                    '    <div class="info">' +
+                                    '        <div class="title">' +
+                                    data[each].place_name +
+                                    '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
+                                    '        </div>' +
+                                    '        <div class="body">' +
+                                    '            <div class="desc">' +
+                                    '                <div class="ellipsis">' + data[each].road_address_name + '</div>' +
+                                    '                <div class="jibun ellipsis">' + data[each].address_name + '</div>' +
+                                    '                <div class="contact">' + data[each].phone + '</div>' +
+                                    '                <span class="ICON-middot"></span>' +
+                                    '                <div class="detail"><a href="'+ data[each].place_url +'" target="_blank" class="link">상세보기</a></div>' +
+                                    '                <span class="ICON-middot"></span>' +
+                                    '                <div class="searchdirections"><a href="https://map.kakao.com/link/to/'+ data[each].place_name + ',' + data[each].y + ',' + data[each].x +'" target="_blank" class="link">길찾기</a></div>' +
+                                    '            </div>' +
+                                    '        </div>' +
+                                    '    </div>' +
+                                    '</div>';
+                                infowindow.setContent(content);
+                                infowindow.open(map, marker);
+                                // info.setMap(map);
+                            });
+
+                            return marker;
+                        });
+                        // 클러스터러에 마커들을 추가합니다
+                        clusterer.addMarkers(markers);
                     });
                     deletepartPolygon(polygons, 16);
                     // console.log(yu + name + (yu == name));

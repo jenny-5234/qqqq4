@@ -18,7 +18,7 @@
   <meta charset="utf-8"/>
   <title>Kakao 지도 시작하기</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=835adee41e6cca987ac2e420ee6a1105&libraries=services"></script>
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=835adee41e6cca987ac2e420ee6a1105&libraries=services, clusterer"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <link rel="stylesheet" type="text/css" href="css/polygon.css">
   <link rel="stylesheet" type="text/css" href="css/search.css">
