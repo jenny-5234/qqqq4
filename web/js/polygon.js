@@ -1,7 +1,7 @@
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div
     mapOption = {
-        center: new kakao.maps.LatLng(37.49461890613009, 127.02760319558533), // 지도의 중심좌표
-        level: 8 // 지도의 확대 레벨
+        center: new kakao.maps.LatLng(37.36163453050286, 126.93520310836283), // 지도의 중심좌표 37.49461890613009, 127.02760319558533
+        level: 5 // 지도의 확대 레벨
     };
 
 
@@ -16,8 +16,14 @@ var clusterer = new kakao.maps.MarkerClusterer({
     minLevel: 5 // 클러스터 할 최소 지도 레벨
 });
 
+/*var mapTypeControl = new kakao.maps.MapTypeControl();
+map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);*/
+
+var zoomControl = new kakao.maps.ZoomControl();
+map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
 // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
-/*if (navigator.geolocation) {
+if (navigator.geolocation) {
 
     // GeoLocation을 이용해서 접속 위치를 얻어옵니다
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -35,11 +41,11 @@ var clusterer = new kakao.maps.MarkerClusterer({
 
 } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
 
-    var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),
+    var locPosition = new kakao.maps.LatLng(37.49461890613009, 127.02760319558533),
         message = 'geolocation을 사용할수 없어요..'
 
     displayMarker(locPosition, message);
-}*/
+}
 
 function getjson(test, city) {
 //행정구역 구분
