@@ -53,12 +53,12 @@ function getjson(test, city) {
     });
 }
 
-var polygons = [];                //function 안 쪽에 지역변수로 넣으니깐 폴리곤 하나 생성할 때마다 배열이 비어서 클릭했을 때 전체를 못 없애줌.  그래서 전역변수로 만듦.
+var polygons = [];            //function 안 쪽에 지역변수로 넣으니깐 폴리곤 하나 생성할 때마다 배열이 비어서 클릭했을 때 전체를 못 없애줌.  그래서 전역변수로 만듦.
 
-var yu = "";
 //행정구역 폴리곤
 function displayArea(coordinates, name, city) {
 
+    var yu = "";
     var path = [];            //폴리곤 그려줄 path
     var points = [];        //중심좌표 구하기 위한 지역구 좌표들
 
@@ -110,15 +110,16 @@ function displayArea(coordinates, name, city) {
     // 다각형에 click 이벤트를 등록하고 이벤트가 발생하면 다각형의 이름과 면적을 인포윈도우에 표시합니다
     kakao.maps.event.addListener(polygon, 'click', function (mouseEvent) {
         console.log(name);
-
+        // polygons[34].setMap(null);
         if(yu!=name) {
             switch (name) {
                 case("김포시"):
                     console.log("실행");
                     $.getJSON("city_mark_info/kimpo.json", function (data) {
                         makemarkerjson(data);
-                        console.log(data);
+                        // console.log(data);
                     });
+                    deletepartPolygon(polygons, 16);
                     // console.log(yu + name + (yu == name));
                     break;
                 case("가평군"):
@@ -126,180 +127,210 @@ function displayArea(coordinates, name, city) {
                     $.getJSON("city_mark_info/gapyeong.json", function (data) {
                         makemarkerjson(data);
                     });
+                    deletepartPolygon(polygons, 21);
                     break;
                 case("안산시"):
                     console.log("실행");
                     $.getJSON("city_mark_info/ansan.json", function (data) {
                         makemarkerjson(data);
                     });
+                    deletepartPolygon(polygons, 26);
                     break;
                 case("안성시"):
                     console.log("실행");
                     $.getJSON("city_mark_info/anseong.json", function (data) {
                         makemarkerjson(data);
                     });
+                    deletepartPolygon(polygons, 15);
                     break;
                 case("안양시"):
                     console.log("실행");
                     $.getJSON("city_mark_info/anyang.json", function (data) {
                         makemarkerjson(data);
                     });
+                    deletepartPolygon(polygons, 29);
                     break;
                 case("부천시"):
                     console.log("실행");
                     $.getJSON("city_mark_info/bucheon.json", function (data) {
                         makemarkerjson(data);
                     });
+                    deletepartPolygon(polygons, 1);
                     break;
                 case("동두천시"):
                     console.log("실행");
                     $.getJSON("city_mark_info/dongducheon.json", function (data) {
                         makemarkerjson(data);
                     });
+                    deletepartPolygon(polygons, 4);
                     break;
                 case("고양시"):
                     console.log("실행");
                     $.getJSON("city_mark_info/goyang.json", function (data) {
                         makemarkerjson(data);
                     });
+                    deletepartPolygon(polygons, 23);
                     break;
                 case("군포시"):
                     console.log("실행");
                     $.getJSON("city_mark_info/gunpo.json", function (data) {
                         makemarkerjson(data);
                     });
+                    deletepartPolygon(polygons, 10);
                     break;
                 case("구리시"):
                     console.log("실행");
                     $.getJSON("city_mark_info/guri.json", function (data) {
                         makemarkerjson(data);
                     });
+                    deletepartPolygon(polygons, 6);
                     break;
                 case("과천시"):
                     console.log("실행");
                     $.getJSON("city_mark_info/gwacheon.json", function (data) {
                         makemarkerjson(data);
                     });
+                    deletepartPolygon(polygons, 5);
                     break;
                 case("광주시"):
                     console.log("실행");
                     $.getJSON("city_mark_info/gwangju.json", function (data) {
                         makemarkerjson(data);
                     });
+                    deletepartPolygon(polygons, 17);
                     break;
                 case("광명시"):
                     console.log("실행");
                     $.getJSON("city_mark_info/gwangmyeong.json", function (data) {
                         makemarkerjson(data);
                     });
+                    deletepartPolygon(polygons, 2);
                     break;
                 case("하남시"):
                     console.log("실행");
                     $.getJSON("city_mark_info/hanam.json", function (data) {
                         makemarkerjson(data);
                     });
+                    deletepartPolygon(polygons, 12);
                     break;
                 case("화성시"):
                     console.log("실행");
                     $.getJSON("city_mark_info/hwaseong.json", function (data) {
                         makemarkerjson(data);
                     });
+                    deletepartPolygon(polygons, 32);
                     break;
                 case("이천시"):
                     console.log("실행");
                     $.getJSON("city_mark_info/icheon.json", function (data) {
                         makemarkerjson(data);
                     });
+                    deletepartPolygon(polygons, 14);
                     break;
                 case("남양주시"):
                     console.log("실행");
                     $.getJSON("city_mark_info/namyangju.json", function (data) {
                         makemarkerjson(data);
                     });
+                    deletepartPolygon(polygons, 7);
                     break;
                 case("오산시"):
                     console.log("실행");
                     $.getJSON("city_mark_info/osan.json", function (data) {
                         makemarkerjson(data);
                     });
+                    deletepartPolygon(polygons, 8);
                     break;
                 case("파주시"):
                     console.log("실행");
                     $.getJSON("city_mark_info/paju.json", function (data) {
                         makemarkerjson(data);
                     });
+                    deletepartPolygon(polygons, 13);
                     break;
                 case("포천시"):
                     console.log("실행");
                     $.getJSON("city_mark_info/pocheon.json", function (data) {
                         makemarkerjson(data);
                     });
+                    deletepartPolygon(polygons, 19);
                     break;
                 case("평택시"):
                     console.log("실행");
                     $.getJSON("city_mark_info/pyeongtaek.json", function (data) {
                         makemarkerjson(data);
                     });
+                    deletepartPolygon(polygons, 3);
                     break;
                 case("성남시"):
                     console.log("실행");
                     $.getJSON("city_mark_info/seongnam.json", function (data) {
                         makemarkerjson(data);
                     });
+                    deletepartPolygon(polygons, 24);
                     break;
                 case("시흥시"):
                     console.log("실행");
                     $.getJSON("city_mark_info/siheung.json", function (data) {
                         makemarkerjson(data);
                     });
+                    deletepartPolygon(polygons, 9);
                     break;
                 case("수원시"):
                     console.log("실행");
                     $.getJSON("city_mark_info/suwon.json", function (data) {
                         makemarkerjson(data);
                     });
+                    deletepartPolygon(polygons, 25);
                     break;
                 case("의정부시"):
                     console.log("실행");
                     $.getJSON("city_mark_info/uijeongbu.json", function (data) {
                         makemarkerjson(data);
                     });
+                    deletepartPolygon(polygons, 0);
                     break;
                 case("의왕시"):
                     console.log("실행");
                     $.getJSON("city_mark_info/uiwang.json", function (data) {
                         makemarkerjson(data);
                     });
+                    deletepartPolygon(polygons, 11);
                     break;
                 case("양주시"):
                     console.log("실행");
                     $.getJSON("city_mark_info/yangju.json", function (data) {
                         makemarkerjson(data);
                     });
+                    deletepartPolygon(polygons, 18);
                     break;
                 case("양평군"):
                     console.log("실행");
                     $.getJSON("city_mark_info/yangpyeong.json", function (data) {
                         makemarkerjson(data);
                     });
+                    deletepartPolygon(polygons, 22);
                     break;
                 case("여주시"):
                     console.log("실행");
                     $.getJSON("city_mark_info/yeoju.json", function (data) {
                         makemarkerjson(data);
                     });
+                    deletepartPolygon(polygons, 20);
                     break;
                 case("연천군"):
                     console.log("실행");
                     $.getJSON("city_mark_info/yeoncheon.json", function (data) {
                         makemarkerjson(data);
                     });
+                    deletepartPolygon(polygons, 30);
                     break;
                 case("용인시"):
                     console.log("실행");
                     $.getJSON("city_mark_info/yongin.json", function (data) {
                         makemarkerjson(data);
                     });
+                    deletepartPolygon(polygons, 31);
                     break;
                 default:
                     ps.keywordSearch(city + name + " 긴급재난지원금", placesSearchCB);
@@ -339,6 +370,25 @@ function deletePolygon(polygons) {
         polygons[i].setMap(null);
     }
     polygons = [];
+}
+
+function deletepartPolygon(polygons, part) {
+    console.log(part);
+    for (var i = 0; i < polygons.length; i++) {
+        if(i==part && 26 <= part && part <=28) {
+            console.log("테스트");
+            i=28;
+        }
+        else if(i==part && part>=32) {
+            console.log("화성");
+            break;
+        }
+        else if(i==part) {
+        }
+        else {
+            polygons[i].setMap(null);
+        }
+    }
 }
 
 // 지도 위에 표시되고 있는 마커를 모두 제거합니다
