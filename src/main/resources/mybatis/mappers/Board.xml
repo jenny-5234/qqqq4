@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--  SQL Mapping 설정 -->
+<mapper namespace="board">
+    <!--  SQL 객체 -->
+    <!--    게시글 목록 -->
+    <select id="getBoardList" resultType="BoardDto">
+		select BoardId, B_Writer, B_Password, B_Title, B_Date, B_Count
+        From Board
+	</select>
+
+    <!--    게시글 작성-->
+    <insert id="insert" parameterType="BoardDto">
+       insert into Board(B_Writer, B_Password, B_Title, B_Context, B_Count)
+        values (#{B_Writer}, #{B_Password}, #{B_Title}, #{B_Context}, 0)
+    </insert>
+
+    <!--    게시글 상세보기-->
+    <select id="pageDetail" resultType="BoardDto">
+        select * from Board
+        where BoardId = #{BoardId}
+    </select>
+
+    <!--    조회수 증가-->
+    <update id="increaseCount" parameterType="java.lang.Integer">
+        update board
+        set B_Count = B_Count + 1
+        where BoardId = #{BoardId}
+    </update>
+
+    <!--    게시글 삭제-->
+    <delete id="deleteById">
+        Delete from board
+        where BoardId = #{BoardId}
+    </delete>
+</mapper>

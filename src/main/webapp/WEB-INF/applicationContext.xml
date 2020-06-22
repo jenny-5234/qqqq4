@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context.xsd
+      http://www.springframework.org/schema/mvc
+      http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <context:annotation-config/>
+
+    <context:component-scan base-package="com.test02.Dao com.test02.Service">
+
+        <context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
+
+    </context:component-scan>
+
+
+    <!--    DataSource는 JDBC의 커넥션을 처리하는 기능을 가지고 있기 때문에 데이터베이스와 연동 작업에 반드시 필요하다.-->
+    <bean id="mssqlDatasource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+        <property name="url" value="jdbc:sqlserver://14.32.18.226:1433;database=YL"/>
+        <property name="username" value="as"/>
+        <property name="password" value="1234"/>
+    </bean>
+
+    <!-- 2. MyBatis SqlSessionFactory -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 설정한 DataSource의 id를 참조로 전달해야 한다 -->
+        <property name="dataSource" ref="mssqlDatasource"/>
+        <!-- MyBatis 설정 파일 위치 지정 -->
+<!--        <property name="mapperLocations" value="classpath*:mybatis/mappers/Notice.xml"/>-->
+        <property name="configLocation" value="classpath:/mybatis/mybatis-config.xml"/>
+    </bean>
+
+    <!-- 3. MyBatis SqlSessionTemplate -->
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <!-- Bean 생성자 호출 -->
+        <constructor-arg index="0" ref="sqlSessionFactory"/>
+    </bean>
+
+
+
+
+</beans>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <typeAlias alias="NoticeDto"
+                   type="com.test02.Dto.NoticeDto"/>
+        <typeAlias alias="BoardDto"
+                   type="com.test02.Dto.BoardDto"/>
+    </typeAliases>
+
+    <!-- SQL과 매핑을 위한 매핑정보 xml -->
+    <mappers>
+        <!--  매퍼 등록 -->
+        <mapper resource="mybatis/mappers/Board.xml"/>
+        <mapper resource="mybatis/mappers/Notice.xml"/>
+    </mappers>
+</configuration>
