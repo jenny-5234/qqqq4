@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.management.Attribute;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -35,6 +36,7 @@ public class BoardController {
     // 2. 게시글 작성
     @RequestMapping("/write")
     public String writeBoard() {
+
         return "/board/write";
     }
 
@@ -42,6 +44,7 @@ public class BoardController {
     public String insert(@ModelAttribute("boardDto") BoardDto boardDto) throws Exception {
         System.out.println(boardDto);
         boardService.insert(boardDto);
+
         return "redirect:/board/boardlist";
     }
 
@@ -58,15 +61,28 @@ public class BoardController {
     // 4. 게시글 삭제
     @SneakyThrows
     @GetMapping(value = "delete.do")
-    public String delete(@RequestParam(value="boardId", required = false) int boardId) {
+    public String delete(@RequestParam(value = "boardId", required = false) int boardId) {
         boardService.delete(boardId);
+
         return "redirect:/board/boardlist";
     }
 
     // 5. 게시글 수정
-    @PostMapping("update.do")
-    public String update(@ModelAttribute BoardDto boardDto) throws Exception{
-        boardService.update(boardDto);
-        return "redirect:/board/boardlist";
+    @GetMapping(value = "/modify")
+    public String update(HttpServletRequest request, Model model) {
+//        boardService.update(request);
+
+        BoardDto boardDto = boardService.update(request);
+        model.addAttribute("boardDto", boardDto);
+//        BoardDto board = boardService.pageSend(request);
+//        model.addAttribute("board", board);
+
+        return "/board/modify";
     }
+
+//    @PostMapping(value = "update.do")
+//    public String modify(@RequestParam(value = "boardId", required = false)BoardDto boardDto) {
+//        boardService.update(b);
+//        return "redirect:/board/boardlist";
+//    }
 }

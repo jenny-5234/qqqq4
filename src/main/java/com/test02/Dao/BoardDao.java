@@ -13,10 +13,10 @@ public class BoardDao {
     @Autowired
     SqlSession sqlSession;
 
-    private static String namespace ="board";
+    private static String namespace = "board";
 
     // 1. 게시글 목록 가져오기
-   public List<BoardDto> getBoardList() {
+    public List<BoardDto> getBoardList() {
         List<BoardDto> list = null;
 
         try {
@@ -29,29 +29,30 @@ public class BoardDao {
     }
 
     // 2. 게시글 쓰기
-    public void insert(BoardDto boardDto) throws Exception{
-        sqlSession.insert(namespace+".insert", boardDto);
+    public void insert(BoardDto boardDto) throws Exception {
+        sqlSession.insert(namespace + ".insert", boardDto);
     }
 
     // 3. 게시글 상세보기
-    public BoardDto pageDetail(int BoardId) throws  Exception {
-       return sqlSession.selectOne( namespace+".pageDetail", BoardId);
+    public BoardDto pageDetail(int BoardId) throws Exception {
+        return sqlSession.selectOne(namespace + ".pageDetail", BoardId);
     }
 
     // 4. 조회수 증가
-    public void increaseCount(int BoardId) throws  Exception{
-       sqlSession.update(namespace+".increaseCount", BoardId);
+    public void increaseCount(int BoardId) throws Exception {
+        sqlSession.update(namespace + ".increaseCount", BoardId);
     }
 
     // 5. 게시글 삭제
     public int delete(int BoardId) {
-       sqlSession.delete(namespace+".delete", BoardId);
-       return BoardId;
+        sqlSession.delete(namespace + ".delete", BoardId);
+        return BoardId;
     }
 
     // 6. 게시글 수정
-    public void update(BoardDto boardDto) throws  Exception{
-       sqlSession.update(namespace+".update", boardDto);
+//    public int update(int BoardId) throws  Exception{
+    public void update(BoardDto boardDto) {
+        sqlSession.update(namespace + ".update", boardDto);
     }
 }
 

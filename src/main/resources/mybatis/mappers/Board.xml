@@ -39,11 +39,11 @@
     </delete>
 
     <!--    게시글 수정-->
-    <update id="update">
+    <update id="update" parameterType="int">
         UPDATE Board
         SET B_Title = #{B_Title},
             B_Context = #{B_Context},
-            B_Writer = #{B_Writer},
-        WHERE BoardId = ${BoardId}
+            B_Writer = #{B_Writer}
+        WHERE BoardId = #{BoardId}
     </update>
 </mapper>

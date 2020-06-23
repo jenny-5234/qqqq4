@@ -4,7 +4,6 @@ import com.test02.Dto.BoardDto;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Service
@@ -18,5 +17,9 @@ public interface BoardService {
     // 게시글 삭제
     public int delete(int BoardId);
     // 게시글 수정
-    public void update(BoardDto boardDto) throws Exception;
+//    public int update(int BoardId);
+    public BoardDto update(HttpServletRequest request);
+    //김영훈만듬
+    public BoardDto pageSend(HttpServletRequest request);
 }
+

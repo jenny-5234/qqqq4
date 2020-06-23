@@ -12,7 +12,7 @@
     <title>글쓰기</title>
 </head>
 <body>
-<form name="bdto" method="post" action="/board/insert.do">
+<form name="insert_Form" method="post" action="/board/insert.do">
     <div>제목<input name="B_Title" id="B_Title" size="20" placeholder="글 제목 입력"></div>
     <div>비밀번호<input name="B_Password" id="B_Password" size="15" placeholder="비밀번호 입력"></div>
     <div>이름<input name="B_Writer" id="B_Writer" placeholder="이름 입력"></div>
