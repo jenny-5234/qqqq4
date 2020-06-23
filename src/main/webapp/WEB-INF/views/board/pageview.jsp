@@ -9,12 +9,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <%--    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">--%>
     <title>Title</title>
 </head>
 <body>
 <%--<section class="content">--%>
-<form name="form1" method="get">
+<form name="form1" method="get" action="/board/delete.do">
     <div class="box">
         <div class="box-header">
             <h3 class="box-title">상세보기</h3>
@@ -38,20 +38,18 @@
                        readonly="readonly"/>
             </div>
         </div>
-        <button class="btn btn-primary" id="listbtn">목록</button>
-        <button class="btn btn-danger" id="deletebtn">삭제</button>
+
+        <td><button type="button" onclick="location.href='/board/boardlist'">목록</button>
+        <td><button type="button" onclick="location.href='delete.do?boardId=${boardDto.boardId}'">삭제</button>
+        <td><button type="button" onclick="location.href='update.do?boardId=${boardDto.boardId}'">수정</button>
+
     </div>
 </form>
 
-<script>
-    document.getElementById("listbtn").addEventListener("click", function () {
-        location.href = "boardlist";
-    });
-    document.getElementById("deletebtn").addEventListener("click", function () {
-        location.href = "boardlist";
-    });
-
-
-</script>
+<%--<script>--%>
+<%--    document.getElementById("listbtn").addEventListener("click", function () {--%>
+<%--        location.href = "board/boardlist";--%>
+<%--    });--%>
+<%--</script>--%>
 </body>
 </html>

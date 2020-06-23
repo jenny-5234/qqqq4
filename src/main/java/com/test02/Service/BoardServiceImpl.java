@@ -41,14 +41,18 @@ public class BoardServiceImpl implements BoardService {
 
         //조회수 증가 메소드
         boardDao.increaseCount((Integer.parseInt(BoardId)));
-
         return boardDao.pageDetail(Integer.parseInt(BoardId));
     }
 
+    // 게시글 삭제
     @Override
-    public void deleteById(int BoardId) throws Exception {
-        boardDao.delete(BoardId);
+    public int delete(int BoardId) {
+        return boardDao.delete(BoardId);
     }
 
-
+    // 게시글 수정
+    @Override
+    public void update(BoardDto boardDto) throws Exception {
+        boardDao.update(boardDto);
+    }
 }

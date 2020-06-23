@@ -5,9 +5,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.swing.*;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.List;
 
 @Repository("boardDao")
@@ -47,8 +44,14 @@ public class BoardDao {
     }
 
     // 5. 게시글 삭제
-    public void delete(int BoardId) throws Exception{
-       sqlSession.delete(namespace+".deleteById", BoardId);
+    public int delete(int BoardId) {
+       sqlSession.delete(namespace+".delete", BoardId);
+       return BoardId;
+    }
+
+    // 6. 게시글 수정
+    public void update(BoardDto boardDto) throws  Exception{
+       sqlSession.update(namespace+".update", boardDto);
     }
 }
 

@@ -35,6 +35,5 @@
     </table>
 </section>
 <a href="write">글쓰기</a>
-
 </body>
 </html>

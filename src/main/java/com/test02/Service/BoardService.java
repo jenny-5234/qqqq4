@@ -16,5 +16,7 @@ public interface BoardService {
     // 게시글 상세보기
     public BoardDto pageDetail(HttpServletRequest request) throws Exception;
     // 게시글 삭제
-    public void deleteById(int BoardId) throws  Exception;
+    public int delete(int BoardId);
+    // 게시글 수정
+    public void update(BoardDto boardDto) throws Exception;
 }
